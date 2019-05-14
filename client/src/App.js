@@ -17,13 +17,13 @@ function App() {
       <div>
         <Navbar />
         <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/test" component={Test} />
-        <Route path="/users" component={Users} />
-        <Route path="/postproduct" component={PostProduct} />
-        <Route component={Page404} />
-      </Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/test" component={Test} />
+          <Route path="/users" component={Users} />
+          <Route path="/postproduct" component={PostProduct} />
+          <Route component={Page404} />
+        </Switch>
       </div>
     </Router>
   );
