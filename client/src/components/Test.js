@@ -11,7 +11,7 @@ this.state = {
 }
 
 componentDidMount() {
-    fetch("http://localhost:3002/users")
+    fetch("http://localhost:3002/api/users")
     .then(response => response.json())
     .then(res => {
         this.setState({ name: res.name })

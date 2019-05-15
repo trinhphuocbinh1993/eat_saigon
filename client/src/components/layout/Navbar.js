@@ -9,9 +9,9 @@ class Navbar extends React.Component {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/test">Test</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/contact">Contact</Link>
           </li>
@@ -20,6 +20,9 @@ class Navbar extends React.Component {
           </li>
           <li>
               <Link to="/postproduct">Post Product</Link>
+          </li>
+          <li>
+              <Link to="/login">Log In</Link>
           </li>
         </ul>
         )
