@@ -12,7 +12,7 @@ var passwordHash = require('password-hash');
 //   res.send({ name: 'binh' });
 // });
 
-/* create session for HOME-PAGE */
+/* create session for ADMIN - PAGE */
 router.post('/check', function (req, res) {
   const token = req.body;
   console.log(token.UserToken) // Coz token is Object, we need to get only value so we call token.[key] => [key] is UserToken
@@ -21,7 +21,7 @@ router.post('/check', function (req, res) {
 
     pool.query(sql, function (error, results) {
       if (error) throw error;
-     
+
       if (results.length > 0) {
         console.log(results[0].userid)
         res.send({ message: " Welcome " + results[0].firstname + " " + results[0].lastname })
@@ -29,15 +29,15 @@ router.post('/check', function (req, res) {
         res.status(500).send({ message: "You need to login again" })
       }
     })
-    } else {
-      res.status(500).send({ message: "You need to login again" })
-  } 
+  } else {
+    res.status(500).send({ message: "You need to login again" })
+  }
 })
 
 
 /* user SIGN-UP */
 
-router.post('/signup', async function (req, res){
+router.post('/signup', async function (req, res) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   let firstNameErr = "";
@@ -113,10 +113,10 @@ router.post('/signup', async function (req, res){
       // Do something with result.
       console.log("Number of records inserted: " + result.affectedRows);
       //res.redirect('/signin')
-      res.send({message: "Your account was created successfully! Please sign in to continue!"})
+      res.send({ message: "Your account was created successfully! Please sign in to continue!" })
     })
   } else {
-    res.status(500).send({ firstNameErr: firstNameErr, lastNameErr: lastNameErr, emailErr: emailErr, passwordErr: passwordErr, confirmPasswordErr: confirmPasswordErr})
+    res.status(500).send({ firstNameErr: firstNameErr, lastNameErr: lastNameErr, emailErr: emailErr, passwordErr: passwordErr, confirmPasswordErr: confirmPasswordErr })
   }
 })
 
@@ -221,6 +221,8 @@ router.post('/login', function (req, res) {
   }
 })
 
+/* user SIGN - OUT */
+
 router.post('/signout', function (req, res) {
   console.log(req.body, "ahihihi")
   const token = req.body.UserToken
@@ -228,11 +230,18 @@ router.post('/signout', function (req, res) {
   var sql = "DELETE FROM sessions WHERE token = '" + token + "'";
 
   pool.query(sql, function (err, results) {
-     if (err) throw err; // not connected!
-      console.log("Number of records deleted: " + results.affectedRows);
-      res.clearCookie('UserToken')
+    if (err) {
+      throw err;
+    } // not connected!
+    console.log("Number of records deleted: " + results.affectedRows);
+    if (results.affectedRows > 0) {
+      console.log('ok')
+      res.send({ message: "ok" })
+    } else {
+      console.log('failed')
+      res.status(500).send({ message: "Error! Can't Sign Out" });
+    }
   })
-
 })
 
 module.exports = router;

@@ -9,9 +9,9 @@ class Navbar extends React.Component {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {/* <li>
-            <Link to="/test">Test</Link>
-          </li> */}
+          <li>
+            <Link to="/admin">Admin</Link>
+          </li>
           <li>
             <Link to="/contact">Contact</Link>
           </li>

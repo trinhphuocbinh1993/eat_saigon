@@ -35,7 +35,7 @@ class Login extends React.Component {
         if(responseJson.token){
             alert(responseJson.token)
             localStorage.setItem('user', responseJson.token);
-            this.props.history.push("/");
+            this.props.history.push("/admin");
         }
         })
     }

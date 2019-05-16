@@ -11,6 +11,7 @@ import PostProduct from './components/PostProduct'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import Admin from './components/Admin'
+import PrivateRoute from './components/PrivateRoute'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
@@ -24,10 +25,10 @@ function App() {
           <Route path="/contact" component={Contact} />
           {/* <Route path="/test" component={Test} /> */}
           <Route path="/users" component={Users} />
-          <Route path="/postproduct" component={PostProduct} />
+          <PrivateRoute path="/postproduct" component={PostProduct} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/admin" component={Admin} />
+          <PrivateRoute path="/admin" component={Admin} />
           <Route component={Page404} />
         </Switch>
       </div>
