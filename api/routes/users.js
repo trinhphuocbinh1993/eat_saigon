@@ -221,4 +221,18 @@ router.post('/login', function (req, res) {
   }
 })
 
+router.post('/signout', function (req, res) {
+  console.log(req.body, "ahihihi")
+  const token = req.body.UserToken
+
+  var sql = "DELETE FROM sessions WHERE token = '" + token + "'";
+
+  pool.query(sql, function (err, results) {
+     if (err) throw err; // not connected!
+      console.log("Number of records deleted: " + results.affectedRows);
+      res.clearCookie('UserToken')
+  })
+
+})
+
 module.exports = router;
