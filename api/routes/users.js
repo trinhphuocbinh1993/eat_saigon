@@ -12,35 +12,112 @@ var passwordHash = require('password-hash');
 //   res.send({ name: 'binh' });
 // });
 
-/* create session for HOMEPAGE */
-router.get('/check', function (req, res) {
-console.log(req.jsonData)
-  const token = req.token;
+/* create session for HOME-PAGE */
+router.post('/check', function (req, res) {
+  const token = req.body;
+  console.log(token.UserToken) // Coz token is Object, we need to get only value so we call token.[key] => [key] is UserToken
   if (token) {
-    let sql = "SELECT * FROM sessions WHERE token = '" + token + "' AND expires > NOW()"
+    let sql = "SELECT *, users.email FROM sessions INNER JOIN users ON sessions.userid=users.id WHERE token = '" + token.UserToken + "' AND expires > NOW()"
 
-    pool.getConnection(function(err, connection) {
-      if (err) throw err; // not connected!
-
-      // Use the connection
-      connection.query(sql, function (error, results) {
-        if (results.length > 0) {
-          res.send({ message: 'Welcome' + results[0].userid })
-        } else {
-          res.redirect('/api/users')
-        }
-        // When done with the connection, release it.
-        connection.release();
-
-        // Handle error after the release.
-        if (error) throw error;
-
-        // Don't use the connection here, it has been returned to the pool.
-      }) 
-      })
+    pool.query(sql, function (error, results) {
+      if (error) throw error;
+     
+      if (results.length > 0) {
+        console.log(results[0].userid)
+        res.send({ message: " Welcome " + results[0].firstname + " " + results[0].lastname })
+      } else {
+        res.status(500).send({ message: "You need to login again" })
+      }
+    })
     } else {
-      res.redirect('/api/users')
+      res.status(500).send({ message: "You need to login again" })
   } 
+})
+
+
+/* user SIGN-UP */
+
+router.post('/signup', async function (req, res){
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  let firstNameErr = "";
+  let lastNameErr = "";
+  let emailErr = "";
+  let passwordErr = "";
+  let confirmPasswordErr = "";
+
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let email = (req.body.email).toLowerCase();
+  let password = req.body.password;
+  let confirmPassword = req.body.confirmPassword;
+  let resultCheckEmail = re.test(email);
+  console.log(resultCheckEmail, "email regex")
+  // validations
+  // check whether firstName is null or ''
+  if (!firstName) {
+    firstNameErr = "First name must have more than 1 characters"
+  } else {
+    true
+  }
+  if (!lastName) {
+    lastNameErr = "Last name must have more than 1 characters"
+  } else {
+    true
+  }
+
+  // validate email
+  if (!email || !resultCheckEmail) {
+    emailErr = "Your email is not valid"
+  } else {
+
+    let sqlemail = "SELECT email FROM users WHERE email = '" + email + "'"
+
+    let emailRecords = await new Promise((resolve, reject) => {
+      pool.query(sqlemail, function (erroremail, resultsemail) {
+        if (erroremail) throw erroremail
+        resolve(resultsemail)
+      })
+    })
+
+
+    if (emailRecords.length > 0) {
+      emailErr = "this email already exist"
+    } else {
+      true
+    }
+  }
+
+  if (password.length < 8) {
+    passwordErr = "Password must be at least 8 chars long"
+  } else {
+    true
+  }
+  if (confirmPassword.length < 8) {
+    confirmPasswordErr = "Confirm password must be at least 8 chars long"
+  } else {
+    if (confirmPassword !== password) {
+      confirmPasswordErr = "Password confirmation is not match"
+    } else {
+      true
+    }
+  }
+
+  // insert sign up user if everything valid
+  if ((firstNameErr == "") && (lastNameErr == "") && (emailErr == "") && (passwordErr == "") && (confirmPasswordErr == "")) {
+    var hashedPassword = passwordHash.generate(password);
+    let sql = "INSERT INTO users (firstname, lastname, email, password) VALUES ('" + firstName + "', '" + lastName + "', '" + email + "', '" + hashedPassword + "')";
+    console.log(sql)
+    pool.query(sql, function (err, result) {
+      if (err) throw new Error(err)
+      // Do something with result.
+      console.log("Number of records inserted: " + result.affectedRows);
+      //res.redirect('/signin')
+      res.send({message: "Your account was created successfully! Please sign in to continue!"})
+    })
+  } else {
+    res.status(500).send({ firstNameErr: firstNameErr, lastNameErr: lastNameErr, emailErr: emailErr, passwordErr: passwordErr, confirmPasswordErr: confirmPasswordErr})
+  }
 })
 
 /* user LOG-IN */

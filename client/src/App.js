@@ -9,6 +9,7 @@ import Users from './components/Users'
 import Page404 from './components/404'
 import PostProduct from './components/PostProduct'
 import Login from './components/Login'
+import SignUp from './components/SignUp'
 import Admin from './components/Admin'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/users" component={Users} />
           <Route path="/postproduct" component={PostProduct} />
           <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
           <Route path="/admin" component={Admin} />
           <Route component={Page404} />
         </Switch>
