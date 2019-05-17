@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import userService from '../service/userService';
 
 
 class Navbar extends React.Component {
@@ -9,9 +10,11 @@ class Navbar extends React.Component {
           <li>
             <Link to="/">Home</Link>
           </li>
+          { (userService.isAuthenticated()) ? (
           <li>
             <Link to="/admin">Admin</Link>
           </li>
+          ) : ""}
           <li>
             <Link to="/contact">Contact</Link>
           </li>

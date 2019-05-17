@@ -1,4 +1,6 @@
 import React from 'react'
+import LogOut from './LogOut';
+import ProductsList from './ProductsList';
 
 class Admin extends React.Component {
     constructor(props) {
@@ -8,7 +10,6 @@ class Admin extends React.Component {
             users: "",
             message: ""
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentDidMount() {
         const token = localStorage.getItem("user");
@@ -41,34 +42,6 @@ class Admin extends React.Component {
             });
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        const token = localStorage.getItem("user");
-        let t = {
-            UserToken: token
-        }
-        
-        fetch("http://localhost:3002/api/users/signout", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(t)
-        }).then((res) => {
-                if (res.ok) {
-                    console.log(res)
-                    console.log("try to delete localStorage")
-                    localStorage.removeItem('user');
-                    this.props.history.push("/");
-                } else {
-                    alert(res.json.message)
-                }
-            }
-
-            )
-    }
-
 
     render() {
         return (
@@ -76,9 +49,8 @@ class Admin extends React.Component {
                 <h1>{this.state.users}</h1>
                 <h1>Hello Im {this.state.name}.{this.state.message}</h1>
                 <br />
-                <form onSubmit={this.handleSubmit}>
-                    <button>Sign out</button>
-                </form>
+                <LogOut />
+                <ProductsList />
             </div>
         )
     }

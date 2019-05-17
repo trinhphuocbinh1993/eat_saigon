@@ -197,7 +197,7 @@ router.post('/login', function (req, res) {
 
                 //res.cookie('usertoken ', token);
                 console.log(token)
-                res.send({ message: "Create token success", token: token })
+                res.send({ message: "Create token success", token: token, userid: userid })
               } else {
                 res.status(500).send({ message: "Can't create token" })
               }
