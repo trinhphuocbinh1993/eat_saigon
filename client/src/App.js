@@ -14,7 +14,6 @@ import Admin from './components/Admin'
 import PrivateRoute from './components/PrivateRoute'
 import userService from './components/service/userService'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import UpdateProduct from './components/UpdateProduct';
 
 
 function App() {
@@ -28,10 +27,10 @@ function App() {
           {/* <Route path="/test" component={Test} /> */}
           <Route path="/users" component={Users} />
           <PrivateRoute path="/postproduct" component={PostProduct} onEnter={userService.requireAuth} />
+          <PrivateRoute path='/product/edit/:id' component={PostProduct} onEnter={userService.requireAuth} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <PrivateRoute path="/admin/" component={Admin}  onEnter={userService.requireAuth}/>
-          <PrivateRoute path="/admin/products/update" component={UpdateProduct}  onEnter={userService.requireAuth}/>
           <Route component={Page404} />
         </Switch>
       </div>

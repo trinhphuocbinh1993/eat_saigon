@@ -1,5 +1,4 @@
 import React from 'react'
-
 class ProductsList extends React.Component {
     constructor(props) {
         super(props)
@@ -7,7 +6,7 @@ class ProductsList extends React.Component {
             message: '',
             list: [],
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
+        //this.handleEdit = this.handleEdit.bind(this)
     }
 
     componentDidMount() {
@@ -21,7 +20,7 @@ class ProductsList extends React.Component {
         })
             .then(response => response.ok ? response.json() : null)
             .then(data => {
-                console.log(data.results[29].status.data[0])
+                console.log(data.results[33])
                 if (data.message) {
                     alert(data.message)
                 } else {
@@ -32,10 +31,25 @@ class ProductsList extends React.Component {
                 }
             })
     }
+    handleEdit(id) {
+        //console.log(id);
+        window.location = "/product/edit/" + id;
+        //this.props.history.push("/product/edit/" + id);
+    }
 
-    handleSubmit(event) {
-        event.preventDefault()
-        this.props.history.push("/admin/products/update");
+    handleDelete(id) {
+        
+        fetch("http://localhost:3002/api/products/delete?id=" + id, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            alert(responseJson.message);
+           window.location = "/admin";
+        })
     }
 
     render() {
@@ -45,6 +59,7 @@ class ProductsList extends React.Component {
                 <table>
                     <thead>
                         <tr>
+                        <th>ID</th>
                             <th>User ID</th>
                             <th>Product name</th>
                             <th>Product description</th>
@@ -54,11 +69,13 @@ class ProductsList extends React.Component {
                             <th>Updated day</th>
                             <th>Product State</th>
                             <th>Product Category</th>
-                            <th>Update</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr></thead>
                     <tbody>
                         {this.state.list.map(listItem =>
                             <tr key={listItem.id}>
+                            <td>{listItem.id}</td>
                                 <td>{listItem.userid}</td>
                                 <td>{listItem.name}</td>
                                 <td>{listItem.description}</td>
@@ -68,7 +85,7 @@ class ProductsList extends React.Component {
                                 <td>{listItem.updated}</td>
                                 <td>
                                     {(() => {
-                                        switch (listItem.status.data[0]) {
+                                        switch (listItem.status) {
                                             case 0: return "On sale";
                                             case 1: return "Hidden";
                                             default: return "Hidden";
@@ -77,7 +94,12 @@ class ProductsList extends React.Component {
                                 </td>
                                
                                 <td>{listItem.category}</td>
-                                <td><form onChange={this.handleSubmit}><button>Update</button></form></td>
+                                <td>
+                                    <button className="btn btn-link" onClick={(id) => this.handleEdit(listItem.id)}>Edit</button>                                    
+                                </td>
+                                <td>
+                                    <button className="btn btn-link" onClick={(id) => this.handleDelete(listItem.id)}>Delete</button>                                    
+                                </td>
                             </tr>
                         )}
                     </tbody>

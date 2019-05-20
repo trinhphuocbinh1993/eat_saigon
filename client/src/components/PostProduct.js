@@ -36,9 +36,12 @@ class PostProduct extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+
         const data = this.state;
         const userid = localStorage.getItem("userid")
         data.userid = userid
+
+        // create
         console.log(data, "ahihi")
         fetch('http://localhost:3002/api/products/create', {
             method: 'POST',
@@ -53,6 +56,7 @@ class PostProduct extends React.Component {
                 alert(responseJson.message);
                 this.props.history.push("/admin");
             })
+
     }
 
     render() {
@@ -64,21 +68,21 @@ class PostProduct extends React.Component {
                 <br />
                 <label htmlFor="description">Product description</label>
                 <br />
-                <textarea name="description" id="description" cols="50" rows="5" onChange={this.handleChange} defaultValue={this.state.description}></textarea>
+                <textarea name="description" id="description" cols="50" rows="5" onChange={this.handleChange} value={this.state.description}></textarea>
                 <br />
                 <label htmlFor="detail">Product detail</label>
                 <br />
-                <textarea name="detail" id="detail" cols="50" rows="5" onChange={this.handleChange} defaultValue={this.state.detail}></textarea>
+                <textarea name="detail" id="detail" cols="50" rows="5" onChange={this.handleChange} value={this.state.detail}></textarea>
                 <br />
                 <label htmlFor="price">Price (£)</label>
                 <br />
-                <Cleave id="price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
+                <Cleave value={this.state.price} id="price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
                 <br />
                 <label htmlFor="categories">Category</label>
                 <br />
 
                 <select name="category" onChange={this.handleChange} value={this.state.category}>
-                     <option>-- Please choose --</option>
+                    <option>-- Please choose --</option>
                     <option defaultValue="appetisers">Appetisers</option>
                     <option defaultValue="traditionalCrispyPancake">Traditional Crispy Pancake</option>
                     <option defaultValue="crispySpringRolls">Crispy Spring Rolls</option>
