@@ -8,6 +8,7 @@ import Contact from './components/Contact'
 import Users from './components/Users'
 import Page404 from './components/404'
 import PostProduct from './components/PostProduct'
+import UpdateProduct from './components/UpdateProduct'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import Admin from './components/Admin'
@@ -27,7 +28,7 @@ function App() {
           {/* <Route path="/test" component={Test} /> */}
           <Route path="/users" component={Users} />
           <PrivateRoute path="/postproduct" component={PostProduct} onEnter={userService.requireAuth} />
-          <PrivateRoute path='/product/edit/:id' component={PostProduct} onEnter={userService.requireAuth} />
+          <PrivateRoute path='/product/edit/:id' component={UpdateProduct} onEnter={userService.requireAuth} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <PrivateRoute path="/admin/" component={Admin}  onEnter={userService.requireAuth}/>

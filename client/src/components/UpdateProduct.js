@@ -18,9 +18,8 @@ class UpdateProduct extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.match.params["id"] !== null) {
             var productID = this.props.match.params["id"];
-            console.log(productID, "tao nghi la cho nay")
+            console.log(productID, "productID here")
 
             fetch('http://localhost:3002/api/products/details?id=' + productID, {
                 method: 'GET',
@@ -30,7 +29,7 @@ class UpdateProduct extends React.Component {
                 }
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson[0].id, "tao nghi la cho nay")
+                    console.log(responseJson[0].id, "ID get from result at server")
                     this.setState({
                         name: responseJson[0].name,
                         description: responseJson[0].description,
@@ -42,16 +41,7 @@ class UpdateProduct extends React.Component {
                     //alert(responseJson.data);
                     //this.props.history.push("/admin");
                 })
-        } else {
-            this.setState({
-                name: "",
-                description: "",
-                detail: "",
-                category: "",
-                price: "",
-                status: false
-        })
-    }
+        
 }
 
     handleChange(event) {
@@ -77,11 +67,6 @@ class UpdateProduct extends React.Component {
         const productID = this.props.match.params["id"];
         const userid = localStorage.getItem("userid")
         data.userid = userid
-
-        //console.log(data)
-
-        if (productID > 0) {
-
             data.productID = productID
             //update
             fetch('http://localhost:3002/api/products/update', {
@@ -96,24 +81,9 @@ class UpdateProduct extends React.Component {
                     alert(responseJson.message);
                     this.props.history.push("/admin");
                 })
-        } else {
-            // create
-            console.log(data, "ahihi")
-            fetch('http://localhost:3002/api/products/create', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-
-            }).then((response) => response.json())
-                .then((responseJson) => {
-                    alert(responseJson.message);
-                    this.props.history.push("/admin");
-                })
+        
         }
-    }
+    
 
     render() {
         return (
@@ -137,7 +107,7 @@ class UpdateProduct extends React.Component {
                 <label htmlFor="categories">Category</label>
                 <br />
 
-                <select name="category" onChange={this.handleChange} value={this.state.category}>
+                <select name="category" onChange={this.handleChange} value={this.state.category || ""}>
                     <option>-- Please choose --</option>
                     <option defaultValue="appetisers">Appetisers</option>
                     <option defaultValue="traditionalCrispyPancake">Traditional Crispy Pancake</option>

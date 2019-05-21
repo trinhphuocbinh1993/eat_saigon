@@ -42,7 +42,7 @@ class PostProduct extends React.Component {
         data.userid = userid
 
         // create
-        console.log(data, "ahihi")
+        console.log(data)
         fetch('http://localhost:3002/api/products/create', {
             method: 'POST',
             headers: {
@@ -51,7 +51,8 @@ class PostProduct extends React.Component {
             },
             body: JSON.stringify(data),
 
-        }).then((response) => response.json())
+        })
+            .then((response) => response.json())
             .then((responseJson) => {
                 alert(responseJson.message);
                 this.props.history.push("/admin");

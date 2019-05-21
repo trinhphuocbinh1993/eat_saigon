@@ -24,7 +24,7 @@ router.get('/list', function (req, res) {
 })
 
 /* Create product page. */
-router.post('/create', function (req, res, next) {
+router.post('/create', function (req, res) {
   console.log(req.body, "test o day")
   let userid = req.body.userid
   let name = req.body.name
@@ -40,11 +40,11 @@ router.post('/create', function (req, res, next) {
   console.log(data, "co gi khong")
   let sql = "INSERT INTO product(userid, name, description, detail, price, created, status, category) VALUES ('" + userid + "','" + name + "', '" + description + "', '" + detail + "', '" + price + "', '" + createdtrans + "', " + status + ", '" + category + "')"
 
-  pool.query(sql, function (error, res) {
+  pool.query(sql, function (error, results) {
     if (error) {
       throw error; // not connected!
     } else {
-      console.log(res.affectedRows + " product inserted!")
+      console.log(results.affectedRows + " product inserted!")
       res.send({ message: '1 product inserted!' })
     }
   })
@@ -54,10 +54,8 @@ router.post('/create', function (req, res, next) {
 
 /* load data when click edit product. */
 router.get('/details', function (req, res) {
-
-  if(req.query.id !== null) {
     const id = req.query.id
-    console.log(id, "id co khong")
+    console.log(id, "ID get from URL")
   
     let sql = "SELECT * FROM product WHERE id=" + id + ""
   
@@ -65,17 +63,13 @@ router.get('/details', function (req, res) {
       if (error) throw error; // not connected!
   
       if (results.length > 0) {
-        console.log(results, "ra cai gi")
+        console.log(results, "1 record get from database following condition")
         res.json(results)
       } else {
         console.log("No data of product found!")
-        res.status(500).send({ message: 'error' })
+        res.status(500).send({ message: "No data of product found!" })
       }
     })
-  } else {
-    res.send({message: "ID null"})
-  }
-  
 })
 
 /* UPDATE PRODUCT */
