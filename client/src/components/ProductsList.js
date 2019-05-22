@@ -67,8 +67,10 @@ class ProductsList extends React.Component {
                             <th>Price</th>
                             <th>Created day</th>
                             <th>Updated day</th>
-                            <th>Product State</th>
+                            <th>State</th>
                             <th>Product Category</th>
+                            <th>Product Tab</th>
+                            <th>Vegetarian</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr></thead>
@@ -94,6 +96,16 @@ class ProductsList extends React.Component {
                                 </td>
                                
                                 <td>{listItem.category}</td>
+                                <td>{listItem.tab}</td>
+                                <td>
+                                {(() => {
+                                        switch (listItem.vegetarian) {
+                                            case 0: return "No";
+                                            case 1: return "Yes";
+                                            default: return "No";
+                                        }
+                                    })()}
+                                </td>
                                 <td>
                                     <button className="btn btn-link" onClick={(id) => this.handleEdit(listItem.id)}>Edit</button>                                    
                                 </td>

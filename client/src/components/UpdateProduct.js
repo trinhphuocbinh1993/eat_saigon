@@ -11,6 +11,7 @@ class UpdateProduct extends React.Component {
             category: '',
             price: '',
             status: false,
+            vegetarian: false,
         }
         this.handleChange = this.handleChange.bind(this)
         this.onNumeralChange = this.onNumeralChange.bind(this);
@@ -37,6 +38,8 @@ class UpdateProduct extends React.Component {
                         category: responseJson[0].category,
                         price: responseJson[0].price,
                         status: responseJson[0].status,
+                        tab: responseJson[0].tab,
+                        vegetarian: responseJson[0].vegetarian,
                     });
                     //alert(responseJson.data);
                     //this.props.history.push("/admin");
@@ -131,12 +134,28 @@ class UpdateProduct extends React.Component {
                     <option defaultValue="clayPotCurry">Clay Pot Curry</option>
                     <option defaultValue="drink">Drink</option>
                 </select>
+                <br /> 
+                
+                <label htmlFor="tab">Tab</label>
                 <br />
-                <label htmlFor="status">Hide product?</label>
+                <select name="tab" onChange={this.handleChange} value={this.state.tab}>
+                    <option>-- Please choose --</option>
+                    <option defaultValue="appetisers">Appetisers</option>
+                    <option defaultValue="maindishes">Main Dishes</option>
+                    <option defaultValue="ppecial">Special</option>
+                    <option defaultValue="lunch">Lunch</option>
+                    <option defaultValue="drinks">Drinks</option>
+                </select>
+
+                <br />
+                <input type="checkbox" id="vegetarian" name="vegetarian" checked={this.state.vegetarian} onChange={this.handleChange} />
+                <label htmlFor="vegetarian">Vegetarian?</label>
+
+                <br />
                 <input type="checkbox" id="status" name="status" checked={this.state.status} onChange={this.handleChange} />
+                <label htmlFor="status">Hide product?</label>
                 <br />
                 <input type="submit" value="Submit" />
-
 
             </form>
         )

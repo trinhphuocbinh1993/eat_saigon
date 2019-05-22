@@ -1,7 +1,5 @@
 const pool = require('../config/database');
 const moment = require('moment');
-const cookieParser = require('cookie-parser')
-const path = require('path');
 const express = require('express');
 const router = express.Router();
 
@@ -35,10 +33,12 @@ router.post('/create', function (req, res) {
   let created = new Date()
   let createdtrans = moment(created, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
   let status = req.body.status // not tick on checkbox. if not tick, database is 1. that mean you sell it. if 0, this mean you dont want to sell it 
+  let tab = req.body.tab
+  let vegetarian = req.body.vegetarian
 
-  let data = [userid, name, description, detail, price, createdtrans, status, category]
+  let data = [userid, name, description, detail, price, createdtrans, status, category, tab, vegetarian]
   console.log(data, "co gi khong")
-  let sql = "INSERT INTO product(userid, name, description, detail, price, created, status, category) VALUES ('" + userid + "','" + name + "', '" + description + "', '" + detail + "', '" + price + "', '" + createdtrans + "', " + status + ", '" + category + "')"
+  let sql = "INSERT INTO product(userid, name, description, detail, price, created, status, category, tab, vegetarian) VALUES ('" + userid + "','" + name + "', '" + description + "', '" + detail + "', '" + price + "', '" + createdtrans + "', " + status + ", '" + category + "', '" + tab + "', " + vegetarian + ")"
 
   pool.query(sql, function (error, results) {
     if (error) {
@@ -87,10 +87,12 @@ router.put('/update', function (req, res) {
   let updated = new Date()
   let updatedtrans = moment(updated, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
   let status = req.body.status // not tick on checkbox. if not tick, status is FALSE, database is 0. that mean you sell it. if 1, it hidden
+  let tab = req.body.tab
+  let vegetarian = req.body.vegetarian
 
-  let data = [userid, name, description, detail, price, updatedtrans, status, category]
+  let data = [userid, name, description, detail, price, updatedtrans, status, category, tab, vegetarian]
   console.log(data)
-  let sql = "UPDATE product SET userid = '" + userid + "', name = '" + name + "', description = '" + description + "', detail = '" + detail + "', price = " + price + ", updated = '" + updatedtrans + "', status = " + status + ", category = '" + category + "' WHERE id = " + id + ""
+  let sql = "UPDATE product SET userid = '" + userid + "', name = '" + name + "', description = '" + description + "', detail = '" + detail + "', price = " + price + ", updated = '" + updatedtrans + "', status = " + status + ", category = '" + category + "', tab = '" + tab + "', vegetarian = " + vegetarian + " WHERE id = " + id + ""
   console.log(sql)
 
 

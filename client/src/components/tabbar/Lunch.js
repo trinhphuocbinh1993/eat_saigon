@@ -1,11 +1,10 @@
 import React from 'react'
-import ControlledTabs from '../components/tabbar/ControlledTabs'
 
-class Home extends React.Component {
+class Lunch extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "Home",
+            name: "Lunch",
         }
         
     }
@@ -16,10 +15,9 @@ class Home extends React.Component {
         return (
             <div>
             <h1>Hello Im {this.state.name}</h1>
-            <ControlledTabs />
             </div>
         )
     }
 }
 
-export default Home
+export default Lunch

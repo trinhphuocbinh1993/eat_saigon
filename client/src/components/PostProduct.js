@@ -11,6 +11,8 @@ class PostProduct extends React.Component {
             category: '',
             price: '',
             status: false,
+            tab: '',
+            vegetarian: false,
         }
         this.handleChange = this.handleChange.bind(this)
         this.onNumeralChange = this.onNumeralChange.bind(this);
@@ -107,8 +109,24 @@ class PostProduct extends React.Component {
                     <option defaultValue="drink">Drink</option>
                 </select>
                 <br />
-                <label htmlFor="status">Hide product?</label>
+                <label htmlFor="tab">Tab</label>
+                <br />
+                <select name="tab" onChange={this.handleChange} value={this.state.tab}>
+                    <option>-- Please choose --</option>
+                    <option defaultValue="appetisers">Appetisers</option>
+                    <option defaultValue="maindishes">Main Dishes</option>
+                    <option defaultValue="ppecial">Special</option>
+                    <option defaultValue="lunch">Lunch</option>
+                    <option defaultValue="drinks">Drinks</option>
+                </select>
+
+                <br />
+                <input type="checkbox" id="vegetarian" name="vegetarian" checked={this.state.vegetarian} onChange={this.handleChange} />
+                <label htmlFor="vegetarian">Vegetarian?</label>
+
+                <br />
                 <input type="checkbox" id="status" name="status" checked={this.state.status} onChange={this.handleChange} />
+                <label htmlFor="status">Hide product?</label>
                 <br />
                 <input type="submit" value="Submit" />
 
