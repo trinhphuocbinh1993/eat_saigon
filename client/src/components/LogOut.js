@@ -1,19 +1,20 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { Button } from 'react-bootstrap';
 
 class LogOut extends React.Component {
     constructor(props) {
         super(props)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
-    
+
     handleSubmit(event) {
         event.preventDefault();
         const token = localStorage.getItem("user");
         let t = {
             UserToken: token
         }
-        
+
         fetch("http://localhost:3002/api/users/signout", {
             method: 'POST',
             headers: {
@@ -22,25 +23,27 @@ class LogOut extends React.Component {
             },
             body: JSON.stringify(t)
         }).then((res) => {
-                if (res.ok) {
-                    console.log(res)
-                    console.log("try to delete localStorage")
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('userid');
-                    this.props.history.push("/");
-                } else {
-                    alert(res.json.message)
-                }
+            if (res.ok) {
+                console.log(res)
+                console.log("try to delete localStorage")
+                localStorage.removeItem('user');
+                localStorage.removeItem('userid');
+                this.props.history.push("/");
+            } else {
+                alert(res.json.message)
             }
+        }
 
-            )
+        )
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <button>Sign out</button>
-            </form>
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <Button variant="primary">Sign out</Button>
+                </form>
+            </div>
         )
     }
 }
