@@ -9,7 +9,8 @@ class UpdateProduct extends React.Component {
             description: '',
             detail: '',
             category: '',
-            price: '',
+            price: 0,
+            lunch_price: 0,
             status: false,
             vegetarian: false,
         }
@@ -37,6 +38,7 @@ class UpdateProduct extends React.Component {
                         detail: responseJson[0].detail,
                         category: responseJson[0].category,
                         price: responseJson[0].price,
+                        lunch_price: responseJson[0].lunch_price ? responseJson[0].lunch_price : 0,
                         status: responseJson[0].status,
                         tab: responseJson[0].tab,
                         vegetarian: responseJson[0].vegetarian,
@@ -61,7 +63,12 @@ class UpdateProduct extends React.Component {
     }
 
     onNumeralChange(event) {
-        this.setState({ price: event.target.rawValue });
+        console.log(event.target)
+        const { name, rawValue } = event.target
+        console.log(name, rawValue)
+        this.setState({
+            [name]: rawValue
+        })
     }
 
     handleSubmit(event) {
@@ -105,7 +112,11 @@ class UpdateProduct extends React.Component {
                 <br />
                 <label htmlFor="price">Price (£)</label>
                 <br />
-                <Cleave value={this.state.price} id="price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
+                <Cleave value={this.state.price} name="price" id="price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
+                <br />
+                <label htmlFor="price">Lunch Price (£)</label>
+                <br />
+                <Cleave value={this.state.lunch_price} name="lunch_price" id="lunch_price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
                 <br />
                 <label htmlFor="categories">Category</label>
                 <br />

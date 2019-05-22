@@ -65,6 +65,7 @@ class ProductsList extends React.Component {
                             <th>Product description</th>
                             <th>Product detail</th>
                             <th>Price</th>
+                            <th>Lunch Price</th>
                             <th>Created day</th>
                             <th>Updated day</th>
                             <th>State</th>
@@ -83,6 +84,7 @@ class ProductsList extends React.Component {
                                 <td>{listItem.description}</td>
                                 <td>{listItem.detail}</td>
                                 <td>{listItem.price}</td>
+                                <td>{listItem.lunch_price}</td>
                                 <td>{listItem.created}</td>
                                 <td>{listItem.updated}</td>
                                 <td>

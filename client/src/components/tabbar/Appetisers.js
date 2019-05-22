@@ -20,17 +20,17 @@ class Appetisers extends React.Component {
             }
         })
             .then(response => response.ok ? response.json() : null)
-            .then(data => {
-                console.log(data.results)
-                if (data.message) {
-                    alert(data.message)
-                } else {
-                    this.setState({
-                        list: data.results
-                    })
+            // .then(data => {
+            //     console.log(data.results)
+            //     if (data.message) {
+            //         alert(data.message)
+            //     } else {
+            //         this.setState({
+            //             list: data.results
+            //         })
 
-                }
-            })
+            //     }
+            // })
     }
 
     render() {

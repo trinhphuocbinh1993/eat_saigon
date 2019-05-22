@@ -29,6 +29,7 @@ router.post('/create', function (req, res) {
   let description = req.body.description
   let detail = req.body.detail
   let price = req.body.price
+  let lunch_price = req.body.lunch_price
   let category = req.body.category
   let created = new Date()
   let createdtrans = moment(created, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
@@ -36,9 +37,9 @@ router.post('/create', function (req, res) {
   let tab = req.body.tab
   let vegetarian = req.body.vegetarian
 
-  let data = [userid, name, description, detail, price, createdtrans, status, category, tab, vegetarian]
+  let data = [userid, name, description, detail, price, lunch_price, createdtrans, status, category, tab, vegetarian]
   console.log(data, "co gi khong")
-  let sql = "INSERT INTO product(userid, name, description, detail, price, created, status, category, tab, vegetarian) VALUES ('" + userid + "','" + name + "', '" + description + "', '" + detail + "', '" + price + "', '" + createdtrans + "', " + status + ", '" + category + "', '" + tab + "', " + vegetarian + ")"
+  let sql = "INSERT INTO product(userid, name, description, detail, price, lunch_price, created, status, category, tab, vegetarian) VALUES ('" + userid + "','" + name + "', '" + description + "', '" + detail + "', '" + price + "', '" + lunch_price + "' , '" + createdtrans + "', " + status + ", '" + category + "', '" + tab + "', " + vegetarian + ")"
 
   pool.query(sql, function (error, results) {
     if (error) {
@@ -83,6 +84,7 @@ router.put('/update', function (req, res) {
   let description = req.body.description
   let detail = req.body.detail
   let price = req.body.price
+  let lunch_price = req.body.lunch_price
   let category = req.body.category
   let updated = new Date()
   let updatedtrans = moment(updated, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
@@ -90,9 +92,9 @@ router.put('/update', function (req, res) {
   let tab = req.body.tab
   let vegetarian = req.body.vegetarian
 
-  let data = [userid, name, description, detail, price, updatedtrans, status, category, tab, vegetarian]
+  let data = [userid, name, description, detail, price, lunch_price, updatedtrans, status, category, tab, vegetarian]
   console.log(data)
-  let sql = "UPDATE product SET userid = '" + userid + "', name = '" + name + "', description = '" + description + "', detail = '" + detail + "', price = " + price + ", updated = '" + updatedtrans + "', status = " + status + ", category = '" + category + "', tab = '" + tab + "', vegetarian = " + vegetarian + " WHERE id = " + id + ""
+  let sql = "UPDATE product SET userid = '" + userid + "', name = '" + name + "', description = '" + description + "', detail = '" + detail + "', price = " + price + ", lunch_price = " + lunch_price + ", updated = '" + updatedtrans + "', status = " + status + ", category = '" + category + "', tab = '" + tab + "', vegetarian = " + vegetarian + " WHERE id = " + id + ""
   console.log(sql)
 
 

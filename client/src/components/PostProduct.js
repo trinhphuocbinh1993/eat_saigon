@@ -9,7 +9,8 @@ class PostProduct extends React.Component {
             description: '',
             detail: '',
             category: '',
-            price: '',
+            price: 0,
+            lunch_price: 0,
             status: false,
             tab: '',
             vegetarian: false,
@@ -33,7 +34,11 @@ class PostProduct extends React.Component {
     }
 
     onNumeralChange(event) {
-        this.setState({ price: event.target.rawValue });
+        console.log(event.target)
+        const { name, rawValue } = event.target
+        this.setState({
+            [name]: rawValue
+        })
     }
 
     handleSubmit(event) {
@@ -79,7 +84,13 @@ class PostProduct extends React.Component {
                 <br />
                 <label htmlFor="price">Price (£)</label>
                 <br />
-                <Cleave value={this.state.price} id="price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
+                <Cleave value={this.state.price} name="price" id="price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
+                
+                <br />
+                <label htmlFor="lunch_price">Lunch Price (£)</label>
+                <br />
+                <Cleave value={this.state.lunch_price} name="lunch_price" id="lunch_price" className="input-numeral" options={{ numeral: true, numeralThousandsGroupStyle: 'thousand' }} onChange={this.onNumeralChange} />
+
                 <br />
                 <label htmlFor="categories">Category</label>
                 <br />
