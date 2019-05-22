@@ -23,23 +23,6 @@ router.get('/list', function (req, res) {
   })
 })
 
-router.get('/appetisers', function(req, res) {
-  let sql = "SELECT * FROM product"
-  pool.query(sql, function (error, results) {
-    console.log()
-    if (error) throw error; // not connected!
-    if (results.length > 0) {
-      res.json({
-        results
-      })
-    }
-    else {
-      res.status(500).send({ message: "No product found!" })
-    }
-  })
-})
-
-
 /* Create product page. */
 router.post('/create', function (req, res) {
   console.log(req.body, "test o day")

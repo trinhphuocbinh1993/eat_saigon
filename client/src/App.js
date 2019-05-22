@@ -14,8 +14,6 @@ import SignUp from './components/SignUp'
 import Admin from './components/Admin'
 import PrivateRoute from './components/PrivateRoute'
 import userService from './components/service/userService'
-import Appetisers from './components/tabs/Appetisers'
-import MainDishes from './components/tabs/MainDishes'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
@@ -27,9 +25,6 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/contact" component={Contact} />
-          <Route path="/appetisers" component={Appetisers} />
-          <Route path="/maindishes" component={MainDishes} />
-         
           {/* <Route path="/test" component={Test} /> */}
           <Route path="/users" component={Users} />
           <PrivateRoute path="/postproduct" component={PostProduct} onEnter={userService.requireAuth} />
